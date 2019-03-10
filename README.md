@@ -32,7 +32,7 @@ Office365の従来の機能に加え、投稿掲示板の機能を使用でき�
 ## デモページ
 こちらのURLからプロトにアクセスして現在の基本的な挙動を確認できます。  
 サインインの際のアカウントは以下のID、PWを使用してください。  
-ID : took.demo@outlook.com PW : team-tool-demo  
+ID : tool.demo@outlook.com PW : team-tool-demo  
 URL: https://team-tool-demo.firebaseapp.com  
 
 
