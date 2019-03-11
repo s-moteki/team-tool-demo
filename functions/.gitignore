@@ -1,6 +1,7 @@
 npm-debug.log*
 .DS_Store
 node_modules/
+.history/
 
 # Editor directories and files
 .idea
