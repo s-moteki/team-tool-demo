@@ -51,6 +51,8 @@ URL: https://team-tool-demo.firebaseapp.com
 - SharePoint情報取得 △
 - 掲示板一覧機能 ◯
 - 掲示板投稿機能 ◯  
+
+  
 ◯...本番同様  
 △...スタブで稼働  
 ## 使い方(3/10時点)
