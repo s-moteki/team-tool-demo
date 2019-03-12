@@ -1,5 +1,5 @@
 # Team-Tool
-##目次
+## 目次
 - [説明](#説明)
   - [きっかけ](#きっかけ)
   - [なぜOffice365でサインインするのか](#なぜOffice365でサインインするのか)
@@ -23,6 +23,8 @@ Office365の従来の機能に加え、投稿掲示板の機能を使用でき�
 - SharePoint上の共有フォルダに格納された社内報(.pdf)などが閲覧されていない
 - Outlookの予定表があまり確認されていない
 - メール(Outlook)以外の機能が認知されていない  
+
+サンプルコードなどもあまりなかったので余計にチャレンジしたいと思いました。
 ## システム構成
 ![構成図](https://firebasestorage.googleapis.com/v0/b/team-tool-demo.appspot.com/o/%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%90%E5%9B%B3.jpg?alt=media&token=94de3896-f273-4e08-8c53-1a2093164d7d)
 - Firebase
