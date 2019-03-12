@@ -30,12 +30,8 @@ export default {
   mixins: [mixinUtil],
   data () {
     return {
-      files: null,
-      displayName: sessionStorage.userDisplayName
+      files: null
     }
-  },
-  computed: {
-    welcomeMessage: () => `ようこそ ${sessionStorage.userDisplayName} さん`
   },
   async mounted () {
     this.files = await MockApis.File.getUserSites()
