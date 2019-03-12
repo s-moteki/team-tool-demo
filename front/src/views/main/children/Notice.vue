@@ -62,8 +62,17 @@ export default {
     Card,
     CardModal
   },
+  computed: {
+    checkForm () {
+      return this.createNoticeForm.title && this.createNoticeForm.subtitle && this.createNoticeForm.content
+    }
+  },
   methods: {
     addNotice () {
+      if (!this.checkForm) {
+        alert('未入力項目があります')
+        return
+      }
       axios.post('https://us-central1-team-tool-demo.cloudfunctions.net/widgets/team-api/notices/add', this.createNoticeForm)
         .then(response => {
           alert('投稿しました')

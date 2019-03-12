@@ -9,8 +9,11 @@
         v-for="file in filesLow"
         :key="file.id">
           <div class="button is-outlined update" @click="goLink(file.webUrl)">
-            <p>{{file.name}}</p>
-            <p>{{parseMonthDate(file.fileSystemInfo.lastModifiedDateTime)}}・{{file.createdBy.user.displayName}}</p>
+            <p class="is-size-5">{{file.name}}</p>
+            <p class="has-text-left is-size-3 update-info">
+              {{parseMonthDate(file.fileSystemInfo.lastModifiedDateTime)}}
+              <i class="is-size-6">{{file.createdBy.user.displayName}}</i>
+            </p>
           </div>
         </div>
       </div>
@@ -61,7 +64,7 @@ export default {
   padding-top: 10px;
   padding-bottom: 10px;
   .update{
-    border: 2px solid #42b983;
+    border:solid 2px #42b983;
     max-width: 95%;
     min-width: 250px;
     display: inline-block;
