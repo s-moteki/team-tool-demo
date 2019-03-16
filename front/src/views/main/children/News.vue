@@ -1,9 +1,6 @@
 <template>
   <section class="section">
     <div class="container" v-if="files">
-      <h1 class="title">
-        社内更新
-      </h1>
       <div class="columns" v-for="(filesLow, index) in $_mixinUtil_splitArray(files.res, 3)" :key="index">
         <div class="column is-one-third files"
         v-for="file in filesLow"
@@ -30,11 +27,12 @@ export default {
   mixins: [mixinUtil],
   data () {
     return {
-      files: null
+      files: null,
+      displayName: sessionStorage.userDisplayName
     }
   },
-  async mounted () {
-    this.files = await MockApis.File.getUserSites()
+  computed: {
+    welcomeMessage: () => `ようこそ ${sessionStorage.userDisplayName} さん`
   },
   methods: {
     parseMonthDate (str) {
@@ -44,16 +42,21 @@ export default {
     goLink (href) {
       window.open(href)
     }
+  },
+  async mounted () {
+    try{
+      this.files = await MockApis.File.getUserSites()
+    } catch (err) {
+      this.$store.commit('childPage/setError', true)
+    }
   }
 }
 </script>
 <style scoped lang="scss">
 .container{
+  padding-top: 2rem;;
   margin: 0 auto;
   text-align: center;
-  .title{
-    padding-top: 5px;
-  }
 }
 
 .files{

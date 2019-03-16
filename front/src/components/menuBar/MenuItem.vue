@@ -34,6 +34,7 @@ $color-link: #2c3e50;
 $color-link-active: #42b983;
 
 .tab{
+  transition: 1.2s ;
   color: $color-link;
   border-bottom-color:$color-link;
   border-bottom-width: 2px;

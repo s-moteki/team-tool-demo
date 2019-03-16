@@ -26,8 +26,7 @@ class Event {
           return new Date(a.start.dateTime).getTime() - new Date(b.start.dateTime).getTime()
         })
       } catch (err) {
-        result.res = null
-        result.err = err
+        throw new Error('API Error getUserEvents')
       }
     } else {
       result.err = 'AccessToken Not Found'

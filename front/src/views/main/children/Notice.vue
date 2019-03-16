@@ -2,7 +2,6 @@
   <section class="section">
     <transition name="fade-fast" mode="out-in">
       <div class="container" v-if="boards">
-        <div class="wrap"><h1>お知らせ</h1></div>
         <div class="card-area">
           <div class="row columns" v-for="(rowBoards, index) in $_mixinUtil_splitArray(boards,3)" :key = index>
             <Card v-for="(board, innerIndex) in rowBoards"
@@ -34,7 +33,7 @@
           <button id="addButton" class="button is-fullwidth" slot="footer" @click="addNotice()">投稿</button>
         </CardModal>
       </div>
-      <Loading v-else/>
+      <Loading v-else-if="showLoading"/>
     </transition>
   </section>
 </template>
@@ -52,6 +51,7 @@ export default {
   data () {
     return {
       boards: null,
+      showLoading: true,
       targetModal: false,
       showForm: false,
       createNoticeForm: {
@@ -82,10 +82,12 @@ export default {
         .then(response => {
           alert('投稿しました')
           this.showForm = false
-          this.boards = null;
+          this.boards = null
+          this.showLoading = true
           axios.get('http://localhost:5000/team-tool-demo/us-central1/widgets/team-api/notices')
             .then(response => {
               this.boards = response.data
+              this.showLoading = true
             })
         })
         .catch((error) => {
@@ -98,7 +100,11 @@ export default {
     axios.get('http://localhost:5000/team-tool-demo/us-central1/widgets/team-api/notices')
       .then(response => {
         this.boards = response.data
-      })
+        this.showLoading = true
+      }).catch(err => {
+        this.$store.commit('childPage/setError', true)
+        this.showLoading = false
+    })
   }
 }
 </script>

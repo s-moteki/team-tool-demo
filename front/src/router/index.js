@@ -48,7 +48,10 @@ const router = new Router({
         }
       ]
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
 
 router.beforeEach((to, from, next) => {
@@ -70,7 +73,9 @@ router.beforeEach((to, from, next) => {
 export default router
 
 router.afterEach((to, from) => {
+  // set current page
   if (to.meta.currentChild) {
     store.commit('childPage/setCurrentChild', to.meta.currentChild)
+    store.commit('childPage/setError', false)
   }
 })

@@ -1,6 +1,7 @@
 
 const state = {
-  currentChild: 'home'
+  currentChild: 'home',
+  error: false
 }
 
 // getters
@@ -10,6 +11,9 @@ const getters = {}
 const mutations = {
   setCurrentChild (state, pageName) {
     state.currentChild = pageName
+  },
+  setError (state, error) {
+    state.error = error
   }
 }
 
