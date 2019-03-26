@@ -38,7 +38,10 @@ Office365の従来の機能に加え、投稿掲示板の機能を使用でき�
 - 使用言語、フレームワークなど
   - Vue.js
   - Node.js + Express
-  - bulma
+  - bulma  
+
+
+※現在はLaravel + MySQLにリプレイス中です→[backend-replace](https://github.com/s-moteki/backend-replace)
 ## デモページ
 PC、スマートフォンどちらでも閲覧可能ですが __スマートフォンでの閲覧を推奨しています。__  
 サインインの際のアカウントはこちらを使用してください。  

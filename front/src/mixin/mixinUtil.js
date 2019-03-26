@@ -12,8 +12,7 @@ export default {
       }, [[]])
     },
     $_mixinUtil_parseDate_yyyy_MM_dd (str) {
-      const date = new Date(str)
-      date.setHours(date.getHours() + 9)
+      const date = new Date(str.replace(/-/g,'/'))
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     }
   }

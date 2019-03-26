@@ -1,17 +1,17 @@
 <template>
-  <section class="section">
+  <section class="section is-fullheight">
     <transition name="fade-fast" mode="out-in">
       <div class="container" v-if="filterEvents">
-        <div v-for="i in 3" :key="i" class="event-section">
-          <p class="is-size-5">{{thisMonth + i - 1}}月</p>
-          <div v-if="filterEvents.get(thisMonth + i - 2) == null">
-            <p class="is-size-5 no-event">{{thisMonth + i - 1}}月の予定はございません</p>
+        <div v-for="month in months" :key="month" class="event-section">
+          <p class="is-size-5">{{month}}月</p>
+          <div v-if="filterEvents.get(month-1) == null">
+            <p class="is-size-5 no-event">{{month}}月の予定はございません</p>
           </div>
           <div v-else class="events">
             <button class="button is-outlined"
-              v-for="(event, index ) in filterEvents.get(thisMonth + i - 2)"
-            :key="index"
-            @click="modalEvent = event"
+              v-for="(event, index ) in filterEvents.get(month-1)"
+              :key="index"
+              @click="modalEvent = event"
             >
               {{parseDate(event.start.dateTime)}}
             </button>
@@ -48,12 +48,13 @@ export default {
       showLoading: true,
       modalEvent: false,
       displayName: sessionStorage.userDisplayName,
-      err: false
+      err: false,
+      months: [
+        this.addAndGetMonth(0),
+        this.addAndGetMonth(1),
+        this.addAndGetMonth(2)
+      ]
     }
-  },
-  computed: {
-    thisMonth: () => parseInt(new Date().getMonth()) + 1,
-    welcomeMessage: () => `ようこそ ${sessionStorage.userDisplayName} さん`
   },
   components: {
     CardModal,
@@ -66,6 +67,12 @@ export default {
     },
     parseDate (str) {
       return new Date(str).getDate()
+    },
+    addAndGetMonth (num) {
+      const date = new Date()
+      const thisMonth = parseInt(date.getMonth()) + 1
+      date.setMonth(thisMonth + num)
+      return date.getMonth() == 0 ? 12 : date.getMonth()
     },
     groupBy (list, keyGetter) {
       const map = new Map()
@@ -95,9 +102,7 @@ export default {
 
 <style scoped lang="scss">
 .container{
-  margin: 0 auto;
   text-align: center;
-
   button{
     margin: 2px;
     border-radius: 10%;
