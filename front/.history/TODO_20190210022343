@@ -1,9 +1,0 @@
-Vue 命名規則:
-  ☐ コンポーネントファイル        PascalCase
-  ☐ コンポーネントタグ             PascalCase
-  ☐ prop                        lowerCamelCase
-
-js命名規則:
-  ☐ local変数・メソッド・関数       lowerCamelCase
-  ☐ ファイル名                     小文字のみ
-  ☐ 定数                          大文字のみ
