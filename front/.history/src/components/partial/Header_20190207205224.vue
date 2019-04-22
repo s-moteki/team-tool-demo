@@ -1,0 +1,56 @@
+<template>
+<section id="header">
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        </a>
+        <div class="navbar-burger burger" data-target="navbar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div id="navbar" class="navbar-menu">
+        <div class="navbar-start is-link">
+          <a class="navbar-item">
+            sign-out
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</section>
+</template>
+<script>
+
+export default {
+  name: 'Header',
+  mounted () {
+    const burger = document.querySelector('.burger')
+    const menu = document.querySelector('#'+ burger.dataset.target);
+    burger.addEventListener('click', function() {
+        burger.classList.toggle('is-active')
+        menu.classList.toggle('is-active')
+    })
+  }
+}
+</script>
+
+<style scoped>
+
+nav{
+  background-color: #6699ff;
+  margin-bottom: -2px;
+}
+
+a{
+  color: aliceblue;
+}
+
+.is-active {
+  display: initial;
+}
+
+</style>
