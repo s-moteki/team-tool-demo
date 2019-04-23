@@ -248,64 +248,64 @@ export default {
     },
 
     // 勤怠削除
-    deleteAttendance () {
-      axios.delete(`http://localhost:8888/api/attendances/${this.showForm.attendance_id}`)
-      .then(response => {
+    async deleteAttendance () {
+      try {
+        const response = await axios.delete(`http://localhost:8888/api/attendances/${this.showForm.attendance_id}`)
         alert('削除が完了しました')
         this.showForm = null
         this.changeYM()
-      }).catch(err => {
+      } catch(err) {
         alert('削除に失敗しました')
-      })
+      }
     },
 
     // 勤怠情報更新
-    editAttendance () {
-      axios.put(`http://localhost:8888/api/attendances/${this.showForm.attendance_id}`,this.showForm)
-      .then(response => {
+    async editAttendance () {
+      try {
+        const response = await axios.put(`http://localhost:8888/api/attendances/${this.showForm.attendance_id}`,this.showForm)
         alert('更新が完了しました')
         this.showForm = null
         this.changeYM()
-      }).catch(err => {
+      } catch (err) {
         alert('更新に失敗しました')
-      })
+      }
     },
 
     // 勤怠追加
-    addAttendance () {
-      axios.post(`http://localhost:8888/api/attendances`,this.showForm)
-      .then(response => {
+    async addAttendance () {
+      try {
+        const response = await axios.post(`http://localhost:8888/api/attendances`,this.showForm)
         alert('投稿が完了しました')
         this.showForm = null
         this.changeYM()
-      }).catch(err => {
+      } catch(err) {
         alert('送信に失敗しました')
-      })
+      }
     },
 
-    // 選択中月日の勤怠情報の取得
-    updateSubmissions () {
-      axios.put(`http://localhost:8888/api/updatesubmissions`, this.attendance)
-      .then(response => {
+    // 選択可能年月取得
+    async updateSubmissions () {
+      try {
+        const response = await axios.put(`http://localhost:8888/api/updatesubmissions`, this.attendance)
         alert('勤怠報告を提出しました。')
         this.changeYM()
-      }).catch(err => {
+      } catch(err) {
         alert('提出に失敗しました。')
-      })
+      }
     },
 
 
     // 選択中月日の勤怠情報の取得
-    changeYM () {
-      this.attendance = null
-      axios.get(`http://localhost:8888/api/attendances?id=${this.user_oid}&year=${this.selectedYM.slice(0, 4)}&month=${this.selectedYM.slice(-2)}`)
-      .then(response => {
+    async changeYM () {
+      try {
+        this.attendance = null
+        const response = await axios.get(`http://localhost:8888/api/attendances?id=${this.user_oid}&year=${this.selectedYM.slice(0, 4)}&month=${this.selectedYM.slice(-2)}`)
         this.attendance = response.data.attendance
         this.submission = this.isSubmission()
-      }).catch(err => {
+      } catch (err) {
         this.$store.commit('childPage/setError', true)
         this.showLoading = false
-      })
+      }
     }
   },
   computed: {
@@ -314,17 +314,17 @@ export default {
       return this.showForm.date && this.showForm.type_id
     }
   },
-  mounted () {
-    axios.get(`http://localhost:8888/api/attendances?id=${this.user_oid}&year=${this.thisMonth().slice(0, 4)}&month=${this.thisMonth().slice(-2)}`)
-    .then(response => {
+  async mounted () {
+    try {
+      const response = await axios.get(`http://localhost:8888/api/attendances?id=${this.user_oid}&year=${this.thisMonth().slice(0, 4)}&month=${this.thisMonth().slice(-2)}`)
       this.attendance = response.data.attendance
       this.yearMonths = response.data.yearMonths.filter((yearMonth, index) => yearMonth.ym != this.thisMonth())
       this.selectedYM = this.thisMonth()
       this.submission = this.isSubmission()
-    }).catch(err => {
-        this.$store.commit('childPage/setError', true)
-        this.showLoading = false
-    })
+    } catch (err) {
+      this.$store.commit('childPage/setError', true)
+      this.showLoading = false
+    }
   }
 }
 </script>

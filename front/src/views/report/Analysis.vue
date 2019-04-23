@@ -61,14 +61,14 @@ export default {
       }
     }
   },
-  mounted () {
-    axios.get(`http://localhost:8888/api/attendance-analysis?id=${this.user_oid}`)
-    .then(response => {
+  async mounted () {
+    try {
+      const response = await axios.get(`http://localhost:8888/api/attendance-analysis?id=${this.user_oid}`)
       this.result = response.data
-    }).catch(err => {
+    } catch (err) {
       this.$store.commit('childPage/setError', true)
       this.showLoading = false
-    })
+    }
   }
 }
 </script>

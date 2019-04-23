@@ -114,23 +114,22 @@ export default {
   },
   methods: {
     // 投稿ボタン押下時
-    addNotice () {
+    async addNotice () {
       if (!this.checkForm) {
         alert('未入力項目があります')
         return
       }
       // https://moteki1236.sakura.ne.jp/team-tool/api/notices
       // http://localhost:8888/api/notices
-      axios.post('http://localhost:8888/api/notices', this.createNoticeForm)
-        .then(response => {
-          alert('投稿が完了しました')
-          this.resetDisplay(response.data)
-          this.closeForm()
-        })
-        .catch((error) => {
-          alert('投稿に失敗しました')
-          console.log(error)
-        })
+      try {
+        const response = await axios.post('http://localhost:8888/api/notices', this.createNoticeForm)
+        alert('投稿が完了しました')
+        this.resetDisplay(response.data)
+        this.closeForm()
+      } catch (error) {
+        alert('投稿に失敗しました')
+        console.log(error)
+      }
     },
     // 入力フォーム初期化
     closeForm () {
@@ -140,35 +139,33 @@ export default {
       this.createNoticeForm.text = ''
     },
     // おしらせ削除
-    deleteNotice (id) {
-      axios.delete(`http://localhost:8888/api/notices/${id}`)
-        .then(response => {
-          alert('削除が完了しました')
-          this.resetDisplay(response.data)
-          this.setDeleteSign()
-        })
-        .catch((error) => {
-          alert('削除に失敗しました')
-          console.log(error)
-        })
+    async deleteNotice (id) {
+      try {
+        const response = await axios.delete(`http://localhost:8888/api/notices/${id}`)
+        alert('削除が完了しました')
+        this.resetDisplay(response.data)
+        this.setDeleteSign()
+      } catch (error) {
+        alert('削除に失敗しました')
+        console.log(error)
+      }
     },
     // お知らせ情報更新
-    updateNotice () {
+    async updateNotice () {
       // 未入力チェック
       if (!this.checkUpdateForm) {
         alert('未入力項目があります')
         return
       }
-      axios.put(`http://localhost:8888/api/notices/${this.updateNoticeForm.id}`, this.updateNoticeForm)
-        .then(response => {
-          alert('更新が完了しました')
-          this.resetDisplay(response.data)
-          this.setUpdateForm(null)
-        })
-        .catch((error) => {
-          alert('更新に失敗しました')
-          console.log(error)
-        })
+      try {
+        const response = await axios.put(`http://localhost:8888/api/notices/${this.updateNoticeForm.id}`, this.updateNoticeForm)
+        alert('更新が完了しました')
+        this.resetDisplay(response.data)
+        this.setUpdateForm(null)
+      } catch(error) {
+        alert('更新に失敗しました')
+        console.log(error)
+      }
     },
     // ローディング画面状態リセット
     resetDisplay (data) {
@@ -185,15 +182,15 @@ export default {
       this.updateNoticeForm = notice
     }
   },
-  mounted () {
+  async mounted () {
     // お知らせ一覧api
-    axios.get('http://localhost:8888/api/notices')
-    .then(response => {
+    try {
+      const response = await axios.get('http://localhost:8888/api/notices')
       this.notices = response.data
-    }).catch(err => {
-        this.$store.commit('childPage/setError', true)
-        this.showLoading = false
-    })
+    } catch (err) {
+      this.$store.commit('childPage/setError', true)
+      this.showLoading = false
+    }
   }
 }
 </script>
