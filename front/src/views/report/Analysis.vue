@@ -1,8 +1,7 @@
 <template>
   <section class="section">
     <transition name="fade-fast" mode="out-in">
-      <div v-if="result" class="container">
-        <div class="columns has-text-centered">
+        <div v-if="result" class="columns has-text-centered">
           <div class="column is-half">
             <p class="subtitle is-4"><i class="fas fa-2x fa-user"></i> あなた</p>
             <p class="is-size-4">今月の残業時間</p>
@@ -17,21 +16,20 @@
             <p class="is-size-4">今月の平均残業時間</p>
             <p class="subtitle is-2">{{getWotkTime(result.group.minute)}}時間</p>
             <p class="is-size-4">今月の平均残業日数</p>
-            <p class="subtitle is-2">{{parseInt(result.group.workdate)}}日</p>
+            <p class="subtitle is-2">{{parseInt(result.group.workdate!=null?result.group.workdate:0)}}日</p>
             <p class="is-size-4">1日の平均残業時間</p>
             <p class="subtitle is-2">{{getWotkTimeAVG(result.group.minute)}}時間</p>
           </div>
         </div>
-      </div>
-      <Loading v-else-if="showLoading"/>
+      <Loading class="loading" v-else-if="showLoading"/>
     </transition>
   </section>
 </template>
 
 <script>
-//n.
 import axios from 'axios'
 import Loading from '@/components/loading/Loading'
+import builders from '@/api/helper/builders'
 
 export default {
   name: 'Analysis',
@@ -45,6 +43,15 @@ export default {
   components: {
     Loading
   },
+  computed: {
+    // 今月の日数を表示
+    thisMonthLastDay () {
+      const date = new Date()
+      date.setMonth(date.getMonth() + 1)
+      date.setDate(0)
+      return date.getDate()
+    }
+  },
   methods: {
     getWotkTime (minute) {
       if (minute) {
@@ -55,7 +62,7 @@ export default {
     },
     getWotkTimeAVG (minute) {
       if (minute) {
-        return ((minute/60)/30).toFixed(2)
+        return ((minute/60)/this.thisMonthLastDay).toFixed(2)
       } else {
         return 0
       }
@@ -63,7 +70,7 @@ export default {
   },
   async mounted () {
     try {
-      const response = await axios.get(`http://localhost:8888/api/attendance-analysis?id=${this.user_oid}`)
+      const response = await axios.get(builders.AnalysisBuilder.buildGetAnalysis(this.user_oid))
       this.result = response.data
     } catch (err) {
       this.$store.commit('childPage/setError', true)
@@ -74,10 +81,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container{
+.columns{
   padding-top: 30px;
 }
-
 .column{
   padding-bottom: 50px;
 }

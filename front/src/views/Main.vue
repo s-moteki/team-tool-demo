@@ -3,7 +3,7 @@
     <!-- ヘッダー -->
     <div class="header">
       <Header/>
-      <transition name="menuBar" mode="out-in">
+      <transition name="menuBar" mode="out-in" class="menuBar">
         <component :is="currentMenuBar"/>
       </transition>
     </div>
@@ -59,10 +59,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .err{
 	position: absolute;
 	top: 50%;
-	left: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   width: 100vw;
 }

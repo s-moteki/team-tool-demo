@@ -121,6 +121,7 @@
 
 <script>
 import MicrosoftApis from '@/api/microsoft/MicrosoftApis'
+import builders from '@/api/helper/builders'
 import CardModal from '@/components/modal/CardModal'
 import Loading from '@/components/loading/Loading'
 import mixinUtil from '@/mixin/mixinUtil'
@@ -250,7 +251,7 @@ export default {
     // 勤怠削除
     async deleteAttendance () {
       try {
-        const response = await axios.delete(`http://localhost:8888/api/attendances/${this.showForm.attendance_id}`)
+        const response = await axios.delete(builders.AttendanceBuilder.buildDeleteAttendance(this.showForm.attendance_id))
         alert('削除が完了しました')
         this.showForm = null
         this.changeYM()
@@ -262,7 +263,7 @@ export default {
     // 勤怠情報更新
     async editAttendance () {
       try {
-        const response = await axios.put(`http://localhost:8888/api/attendances/${this.showForm.attendance_id}`,this.showForm)
+        const response = await axios.put(builders.AttendanceBuilder.buildPutAttendance(this.showForm.attendance_id),this.showForm)
         alert('更新が完了しました')
         this.showForm = null
         this.changeYM()
@@ -274,7 +275,7 @@ export default {
     // 勤怠追加
     async addAttendance () {
       try {
-        const response = await axios.post(`http://localhost:8888/api/attendances`,this.showForm)
+        const response = await axios.post(builders.AttendanceBuilder.buildPostAttendance(),this.showForm)
         alert('投稿が完了しました')
         this.showForm = null
         this.changeYM()
@@ -283,10 +284,10 @@ export default {
       }
     },
 
-    // 選択可能年月取得
+    // 提出フラグの更新
     async updateSubmissions () {
       try {
-        const response = await axios.put(`http://localhost:8888/api/updatesubmissions`, this.attendance)
+        const response = await axios.put(builders.AttendanceBuilder.buildPutSubmissions(), this.attendance)
         alert('勤怠報告を提出しました。')
         this.changeYM()
       } catch(err) {
@@ -294,12 +295,11 @@ export default {
       }
     },
 
-
-    // 選択中月日の勤怠情報の取得
+    // 選択中月日の勤怠情報の取得this.selectedYM
     async changeYM () {
       try {
         this.attendance = null
-        const response = await axios.get(`http://localhost:8888/api/attendances?id=${this.user_oid}&year=${this.selectedYM.slice(0, 4)}&month=${this.selectedYM.slice(-2)}`)
+        const response = await axios.get(builders.AttendanceBuilder.buildGetAttendance(this.user_oid, this.selectedYM))
         this.attendance = response.data.attendance
         this.submission = this.isSubmission()
       } catch (err) {
@@ -316,7 +316,7 @@ export default {
   },
   async mounted () {
     try {
-      const response = await axios.get(`http://localhost:8888/api/attendances?id=${this.user_oid}&year=${this.thisMonth().slice(0, 4)}&month=${this.thisMonth().slice(-2)}`)
+      const response = await axios.get(builders.AttendanceBuilder.buildGetAttendance(this.user_oid, this.thisMonth()))
       this.attendance = response.data.attendance
       this.yearMonths = response.data.yearMonths.filter((yearMonth, index) => yearMonth.ym != this.thisMonth())
       this.selectedYM = this.thisMonth()
@@ -330,6 +330,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .attendance{
   padding-top: 30px;
 }
@@ -382,7 +383,7 @@ textarea{
   position: fixed;
   bottom: 40px;
   right: 10px;
-  z-index: 100;
+  z-index: 98;
   color: #FFF;
   background-color: #42b983;
 }

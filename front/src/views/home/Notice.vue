@@ -76,6 +76,7 @@ import axios from 'axios'
 import CardModal from '@/components/modal/CardModal'
 import mixinUtil from '@/mixin/mixinUtil'
 import Loading from '@/components/loading/Loading'
+import builders from '@/api/helper/builders'
 
 export default {
   name: 'Notice',
@@ -119,10 +120,8 @@ export default {
         alert('未入力項目があります')
         return
       }
-      // https://moteki1236.sakura.ne.jp/team-tool/api/notices
-      // http://localhost:8888/api/notices
       try {
-        const response = await axios.post('http://localhost:8888/api/notices', this.createNoticeForm)
+        const response = await axios.post(builders.NoticeBuilder.buildPostNotice(), this.createNoticeForm)
         alert('投稿が完了しました')
         this.resetDisplay(response.data)
         this.closeForm()
@@ -141,7 +140,7 @@ export default {
     // おしらせ削除
     async deleteNotice (id) {
       try {
-        const response = await axios.delete(`http://localhost:8888/api/notices/${id}`)
+        const response = await axios.delete(builders.NoticeBuilder.buildDeleteNotice(id))
         alert('削除が完了しました')
         this.resetDisplay(response.data)
         this.setDeleteSign()
@@ -158,7 +157,7 @@ export default {
         return
       }
       try {
-        const response = await axios.put(`http://localhost:8888/api/notices/${this.updateNoticeForm.id}`, this.updateNoticeForm)
+        const response = await axios.put(builders.NoticeBuilder.buildPutNotice(this.updateNoticeForm.id), this.updateNoticeForm)
         alert('更新が完了しました')
         this.resetDisplay(response.data)
         this.setUpdateForm(null)
@@ -185,7 +184,7 @@ export default {
   async mounted () {
     // お知らせ一覧api
     try {
-      const response = await axios.get('http://localhost:8888/api/notices')
+      const response = await axios.get(builders.NoticeBuilder.buildGetNotice())
       this.notices = response.data
     } catch (err) {
       this.$store.commit('childPage/setError', true)
@@ -219,7 +218,7 @@ export default {
   position: fixed;
   bottom: 40px;
   right: 10px;
-  z-index: 100;
+  z-index: 98;
   color: #FFF;
   background-color: #42b983;
 }
