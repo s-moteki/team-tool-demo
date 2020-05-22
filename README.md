@@ -72,8 +72,3 @@ Noticeページ(社内更新)のみモックで稼働中です。
   - 右下部のボタンから投稿内容を書き込みがで可能です。  
     
 (3/12時点)  
-
-## Setup
-Under Construction...
-## Licence
-Under Construction...
