@@ -5,7 +5,7 @@ const CONFIG = {
   authEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
   redirectUri: 'http://localhost:8080/',
   // redirectUri: 'https://team-tool-demo.firebaseapp.com',
-  appId: '28832344-9999-4964-8afe-782119f483e4',
+  appId: 'アプリID',
   scopes: 'openid profile User.Read Mail.Read Mail.Send Mail.ReadWrite Calendars.Read Files.Read.All Sites.Read.All'
 }
 
