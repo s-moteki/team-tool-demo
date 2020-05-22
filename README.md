@@ -9,8 +9,7 @@
 前職で社内コミュニケーションツールがなかったのと、勤怠報告が紙媒体だったのでそれらの機能を盛り込んだwebアプリを趣味として作成したものです。  
 社員にはoffice365のアカウントが配布されていたので、そのアカウントと連携できる仕様にしました。
 
-![デモ](https://firebasestorage.googleapis.com/v0/b/team-tool-demo.appspot.com/o/20190314_223415.GIF?alt=media&token=26f9d66d-74c0-48f6-8973-3004288034e9)
-
+![デモ](./doc/demo.gif)  
 ## システム構成図  
 
 ![構成図](./doc/infra.png)
