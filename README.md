@@ -13,7 +13,7 @@
 
 ## システム構成図  
 
-![構成図](https://firebasestorage.googleapis.com/v0/b/team-tool-demo.appspot.com/o/%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%90%E5%9B%B3.jpg?alt=media&token=94de3896-f273-4e08-8c53-1a2093164d7d)
+![構成図](./doc/infra.png)
 
 ## 使用技術、ツール、環境
 
